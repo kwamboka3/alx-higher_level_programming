@@ -9,4 +9,4 @@ def roman_to_int(roman_string):
     for c in roman_string:
         sum += table[c] if table[c] <= prev else table[c] - prev * 2
         prev = table[c]
-    return 
+    return sum 
