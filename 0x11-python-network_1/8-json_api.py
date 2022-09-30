@@ -1,23 +1,20 @@
 #!/usr/bin/python3
-"""
-takes in a letter and sends a POST request to http://0.0.0.0:5000/search_user
-with the letter as a parameter
-"""
-if __name__ == '__main__':
-    import requests
-    from sys import argv
-    if len(argv) == 2:
-        q = argv[1]
+'''network module'''
+import requests
+import sys
+
+if __name__ == "__main__":
+    url = "http://0.0.0.0:5000/search_user"
+    if len(sys.argv) is 1:
+        data = {'q': ""}
     else:
-        q = ""
-    r = requests.post('http://0.0.0.0:5000/search_user', data={'q': q})
+        data = {'q': sys.argv[1]}
+    response = requests.post(url, data)
     try:
-        r_dict = r.json()
-        id = r_dict.get('id')
-        name = r_dict.get('name')
-        if len(r_dict) == 0 or not id or not name:
+        if len(response.json()) == 0:
             print("No result")
         else:
-            print("[{}] {}".format(r_dict.get('id'), r_dict.get('name')))
-    except:
+            print("[{}] {}".format(response.json().
+                                   get('id'), response.json().get('name')))
+    except ValueError:
         print("Not a valid JSON")
