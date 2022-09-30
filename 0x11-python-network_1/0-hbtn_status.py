@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''network module'''
-import urllib
+import urllib.request
 
 
 with urllib.request.urlopen('https://intranet.hbtn.io/status')as response:
