@@ -4,11 +4,9 @@
 * The first argument is the API URL of the Star wars API: https://swapi-api.hbtn.io/api/films/
 * Wedge Antilles is character ID 18 - your script must use this ID for filtering the result of the API
 */
-
 const axios = require('request');
 const url = process.argv[2];
 let count = 0;
-
 axios(url, function (err, response, body) {
   if (!err) {
     const jsoon = JSON.parse(body);
