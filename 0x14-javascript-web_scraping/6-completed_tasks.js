@@ -4,12 +4,10 @@
  *The first argument is the API URL: https://jsonplaceholder.typicode.com/todos
  *Only print users with completed task
  */
-
 const axios = require('axios');
 const url = process.argv[2];
 let cantidad = 0;
 const dict = {};
-
 axios.get(url)
   .then(function (response) {
     for (const num in response.data) {
