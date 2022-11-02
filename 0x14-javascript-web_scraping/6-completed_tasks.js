@@ -1,20 +1,36 @@
 #!/usr/bin/node
-const request = require('request');
-request.get(process.argv[2], function (err, res, body) {
-  const d = {};
-  const total = JSON.parse(body);
-  if (res.statusCode === 200) {
-    for (let i = 0; i < total.length; i++) {
-      if (total[i].completed) {
-        if ((total[i].userId in d)) {
-          d[total[i].userId] += 1;
-        } else {
-          d[total[i].userId] = 1;
-        }
+/*
+ *Write a script that computes the number of tasks completed by user id.
+ *The first argument is the API URL: https://jsonplaceholder.typicode.com/todos
+ *Only print users with completed task
+ */
+
+const axios = require('axios');
+const url = process.argv[2];
+let cantidad = 0;
+const dict = {};
+
+axios.get(url)
+  .then(function (response) {
+    for (const num in response.data) {
+      const userid = response.data[num].userId;
+      const task = response.data[num].completed;
+      if (dict[userid] >= 1) {
+        cantidad = dict[userid];
+      } else {
+        cantidad = 0;
+      }
+      if (task) {
+        cantidad += 1;
+      }
+      dict[userid] = cantidad;
+
+      if (dict[userid] === 0) {
+        delete dict[userid];
       }
     }
-    console.log(d);
-  } else if (err) {
-    console.log(err);
-  }
-});
+    console.log(dict);
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
