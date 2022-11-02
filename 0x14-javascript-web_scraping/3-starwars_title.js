@@ -1,9 +1,14 @@
 #!/usr/bin/node
-const request = require('request');
-request.get('http://swapi.co/api/films/' + process.argv[2], function (err, res, body) {
-  if (res.statusCode === 200) {
-    console.log(JSON.parse(body).title);
-  } else if (err) {
-    console.log(err);
-  }
-});
+/*
+ * Write a script that prints the title of a Star Wars movie where the episode number matches a given integer.
+ * The first argument is the movie ID
+ */
+const axios = require('axios');
+const url = 'https://swapi-api.hbtn.io/api/films/' + (process.argv[2]);
+axios.get(url)
+  .then(function (response) {
+    console.log(response.data.title);
+  })
+  .catch(function (err) {
+    console.log(err.response.status);
+  });
