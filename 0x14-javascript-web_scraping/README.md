@@ -1,6 +1,6 @@
 <img src="https://blog.holbertonschool.com/wp-content/uploads/2020/04/unnamed-2.png" width="170" height="210">
 
-# Holbertonschool-higher_level_programming
+# Alx-higher_level_programming
 
 ## 0x14-javascript-web_scraping
 
