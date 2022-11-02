@@ -1,4 +1,20 @@
 #!/usr/bin/node
-const request = require('request');
+/*
+ * Write a script that gets the contents of a webpage and stores it in a file.
+ * The first argument is the URL to request
+ * The second argument the file path to store the body response
+ */
+
+const axios = require('axios');
 const fs = require('fs');
-request.get(process.argv[2]).pipe(fs.createWriteStream(process.argv[3]));
+const url = process.argv[2];
+const nameFile = process.argv[3];
+
+axios.get(url)
+  .then(function (response) {
+    fs.writeFile(nameFile, response.data, 'utf-8', function (err, data) {
+      if (err) {
+        console.error(err);
+      }
+    });
+  });
