@@ -1,4 +1,6 @@
 #!/usr/bin/node
-const request = require('request');
+// A script that gets the contents of a webpage and stores it in a file
+
 const fs = require('fs');
-request.get(process.argv[2]).pipe(fs.createWriteStream(process.argv[3]));
+const request = require('request');
+request(process.argv[2]).pipe(fs.createWriteStream(process.argv[3]));
