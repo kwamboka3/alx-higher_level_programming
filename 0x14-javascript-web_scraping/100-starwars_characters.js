@@ -1,21 +1,17 @@
 #!/usr/bin/node
-/*
- * Write a script that prints all characters of a Star Wars movie:
- * The first argument is the Movie ID - example: 3 = “Return of the Jedi”
- * Display one character name by line
- */
-
-const axios = require('axios');
-const url = ('https://swapi-api.hbtn.io/api/films/');
-const film = process.argv[2];
-
-axios.get(url + film)
-  .then(function (response) {
-    for (const x in response.data.characters) {
-      const people = response.data.characters[x];
-      axios.get(people)
-        .then(function (response) {
-          console.log(response.data.name);
-        });
+const request = require('request');
+request.get('http://swapi.co/api/films/' + process.argv[2], function (err, res, body) {
+  if (res.statusCode === 200) {
+    for (const character of JSON.parse(body).characters) {
+      request.get(character, function (err1, res1, body1) {
+        if (res1.statusCode === 200) {
+          console.log(JSON.parse(body1).name);
+        } else if (err1) {
+          console.log(err1);
+        }
+      });
     }
-  });
+  } else if (err) {
+    console.log(err);
+  }
+});
