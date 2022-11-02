@@ -4,15 +4,6 @@
  * The first argument is the URL to request
  * The second argument the file path to store the body response
  */
-const axios = require('axios');
+const request = require('request');
 const fs = require('fs');
-const url = process.argv[2];
-const nameFile = process.argv[3];
-axios.get(url)
-  .then(function (response) {
-    fs.writeFile(nameFile, response.data, 'utf-8', function (err, data) {
-      if (err) {
-        console.error(err);
-      }
-    });
-  });
+request.get(process.argv[2]).pipe(fs.createWriteStream(process.argv[3]));
